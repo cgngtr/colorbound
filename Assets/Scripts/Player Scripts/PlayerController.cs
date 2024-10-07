@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         { 
             jumpPressed = true;
         }
+        _playerInput.ChangeColorState();
     }
 
     private void FixedUpdate()
@@ -32,13 +33,5 @@ public class PlayerController : MonoBehaviour
             _playerMovement.Jump();
             jumpPressed = false;
         }
-
-        
-
-        //if (Input.GetKeyDown(KeyCode.Space) && _playerMovement.IsGrounded())
-        //{
-        //    Debug.Log("Initiating jump.");
-        //    _playerMovement.Jump();
-        //}
     }
 }

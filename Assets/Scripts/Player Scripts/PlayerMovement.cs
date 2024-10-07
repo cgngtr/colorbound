@@ -11,44 +11,37 @@ public interface IMoveable
 
 public class PlayerMovement : MonoBehaviour, IMoveable
 {
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float moveSpeed = 5f;
+    private PlayerStats _playerStats;
+    private Rigidbody2D rb;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
-    public bool isGrounded;
 
     private void Awake()
     {
+        _playerStats = GetComponent<PlayerStats>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     public void Move(Vector2 direction)
     {
-        rb.velocity = new Vector2(direction.x * moveSpeed * Time.deltaTime , rb.velocity.y);
+        rb.velocity = new Vector2(direction.x * _playerStats.GetMovementSpeed() * Time.deltaTime , rb.velocity.y);
     }
 
     public void Jump()
     {
-        rb.AddForce(Vector2.up * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * _playerStats.GetJumpForce() * Time.deltaTime, ForceMode2D.Impulse);
     }
 
     public bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckRadius, groundLayer);
-        if(hit)
-        { 
-           isGrounded = true;
-           return true;
-        }
+        if (hit)
+            return true;
         else
-        {
-            isGrounded = false;
             return false;
-        }
     }
 
     public Vector2 GetMovementInput()
