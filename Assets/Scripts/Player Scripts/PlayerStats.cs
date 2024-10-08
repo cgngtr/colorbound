@@ -6,10 +6,12 @@ public class PlayerStats : MonoBehaviour
 
     public float BaseMovementSpeed { get; private set; } = 250f;
     public float BaseJumpForce { get; private set; } = 250f;
+    public float BaseAttackDamage { get; private set; } = 2f;
 
     [Header("Current Stats")]
     [SerializeField] private float currentMovementSpeed;
     [SerializeField] private float currentJumpForce;
+    [SerializeField] private float currentAttackDamage;
 
 
     private void Awake()
@@ -21,6 +23,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentMovementSpeed = BaseMovementSpeed;
         currentJumpForce = BaseJumpForce;
+        currentAttackDamage = BaseAttackDamage;
     }
 
     private void Update()
@@ -58,6 +61,24 @@ public class PlayerStats : MonoBehaviour
     public float GetJumpForce()
     {
         return currentJumpForce;
+    }
+    #endregion
+
+
+    #region Controlling Attack Damage
+    public void SetAttackDamage(float damage)
+    {
+        currentAttackDamage = damage;
+    }
+    
+    public void ResetAttackDamage()
+    {
+        currentAttackDamage = BaseAttackDamage;
+    }
+
+    public float GetAttackDamage()
+    {
+        return currentAttackDamage;
     }
     #endregion
 }

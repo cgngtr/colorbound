@@ -10,12 +10,12 @@ public class GreenState : ColorState.IColorState
 
     public void EnterState(PlayerStats player, SpriteRenderer sr)
     {
-        
+        sr.color = green;
     }
 
     public void ExitState(PlayerStats player, SpriteRenderer sr)
     {
-        
+        sr.color = black;
     }
 
     public void UpdateState(PlayerStats player)

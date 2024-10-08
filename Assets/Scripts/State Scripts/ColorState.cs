@@ -36,6 +36,7 @@ public class ColorState : MonoBehaviour
         _playerStats = GetComponent<PlayerStats>();
     }
 
+
     public void ChangeState(IColorState newState)
     {
         if (currentState == newState)
