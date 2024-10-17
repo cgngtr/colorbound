@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        { 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             jumpPressed = true;
         }
         _playerInput.ChangeColorState();
@@ -28,10 +28,11 @@ public class PlayerController : MonoBehaviour
         Vector2 movementInput = _playerMovement.GetMovementInput();
         _playerMovement.Move(movementInput);
 
-        if(_playerMovement.IsGrounded() && jumpPressed)
+        if (_playerMovement.IsGrounded() && jumpPressed)
         {
             _playerMovement.Jump();
             jumpPressed = false;
         }
     }
 }
+
