@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 244955760}
   - component: {fileID: 244955761}
   - component: {fileID: 244955762}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,7 +857,7 @@ MonoBehaviour:
   isBouncing: 0
   bounceTimer: 0
   bounceDuration: 0.2
-  bounceSpeed: 20
+  bounceSpeed: 50
 --- !u!1 &351506573
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,6 +869,8 @@ GameObject:
   - component: {fileID: 351506574}
   - component: {fileID: 351506576}
   - component: {fileID: 351506575}
+  - component: {fileID: 351506578}
+  - component: {fileID: 351506577}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -916,6 +918,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circle: {fileID: 378406704}
+--- !u!114 &351506577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351506573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2509c0b4d2590d740b9126e3c3ec0324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &351506578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351506573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd85f46b319525419e625e754120198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillManager: {fileID: 351506577}
 --- !u!1 &372128616
 GameObject:
   m_ObjectHideFlags: 0
@@ -3106,7 +3133,7 @@ GameObject:
   - component: {fileID: 633077649}
   - component: {fileID: 633077650}
   - component: {fileID: 633077651}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pad
   m_TagString: Pad
   m_Icon: {fileID: 0}
@@ -3236,7 +3263,7 @@ GameObject:
   - component: {fileID: 792723482}
   - component: {fileID: 792723483}
   - component: {fileID: 792723484}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3366,7 +3393,7 @@ GameObject:
   - component: {fileID: 1055126375}
   - component: {fileID: 1055126376}
   - component: {fileID: 1055126377}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pad (1)
   m_TagString: Pad
   m_Icon: {fileID: 0}
@@ -4652,7 +4679,7 @@ GameObject:
   - component: {fileID: 1139461009}
   - component: {fileID: 1139461010}
   - component: {fileID: 1139461011}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7962,7 +7989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1849982806}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlatformTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}

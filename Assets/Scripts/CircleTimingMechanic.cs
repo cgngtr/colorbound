@@ -20,7 +20,7 @@ public class CircleTimingMechanic : MonoBehaviour
     void Update()
     {
         timePassed += Time.deltaTime;
-        if(outerCircle.activeSelf && innerCircle.activeSelf)
+        if (outerCircle.activeSelf && innerCircle.activeSelf)
         {
             readyToShrink = true;
         }
@@ -29,21 +29,30 @@ public class CircleTimingMechanic : MonoBehaviour
             readyToShrink = false;
         }
 
-        if(readyToShrink)
+        // Active checker
+        if (readyToShrink)
             ShrinkCircle();
 
-        if(timePassed * 2 > 2.1f)
-        {
-            ResetCircle();
+        // Time resetter
+        if (timePassed * 2 > 2.1f)
             timePassed = 0;
-        }
 
-        if(GetDistance() <= perfectThreshold)
+
+        // isPerfect checks
+        if (GetDistance() <= perfectThreshold)
         {
             isPerfect = true;
         }
         else
         {
+            isPerfect = false;
+        }
+
+        // Check if the outer circle is too close to the inner circle
+        if (GetDistance() <= 0.1f) // Adjust the threshold as needed
+        {
+            Debug.Log("Outer circle is too close to the inner circle. Resetting...");
+            ResetCircle();
             isPerfect = false;
         }
 
@@ -55,11 +64,12 @@ public class CircleTimingMechanic : MonoBehaviour
         else if (!isPerfect && Input.GetKeyDown(KeyCode.X))
         {
             //Debug.Log("Time passed: " + timePassed * 2);
-            Debug.Log("Distance: " + GetDistance() + " , Perfect Threshold: " + perfectThreshold);
+            //Debug.Log("Distance: " + GetDistance() + " , Perfect Threshold: " + perfectThreshold);
             Debug.Log("Missed!");
             ResetCircle();
         }
     }
+
 
     public float ShrinkCircle()
     {
