@@ -568,9 +568,9 @@ GameObject:
   m_Component:
   - component: {fileID: 304044988}
   - component: {fileID: 304044987}
+  - component: {fileID: 304044993}
   - component: {fileID: 304044990}
   - component: {fileID: 304044986}
-  - component: {fileID: 304044993}
   - component: {fileID: 304044984}
   - component: {fileID: 304044985}
   - component: {fileID: 304044991}
@@ -840,6 +840,7 @@ MonoBehaviour:
   perfectThreshold: 0.25
   timePassed: 0
   isPerfect: 0
+  isPerfectlyPressed: 0
   readyToShrink: 0
   shrinkSpeed: 2
 --- !u!114 &304044994

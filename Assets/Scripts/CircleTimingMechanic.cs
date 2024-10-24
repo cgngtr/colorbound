@@ -7,6 +7,7 @@ public class CircleTimingMechanic : MonoBehaviour
     public float perfectThreshold = 1f;
     public float timePassed;
     public bool isPerfect = false;
+    public bool isPerfectlyPressed = false;
     public bool readyToShrink = false;
 
     public float shrinkSpeed = 2f;
@@ -16,6 +17,7 @@ public class CircleTimingMechanic : MonoBehaviour
     {
         outerCircleInitialScale = outerCircle.transform.localScale;
     }
+
 
     void Update()
     {
@@ -48,18 +50,23 @@ public class CircleTimingMechanic : MonoBehaviour
             isPerfect = false;
         }
 
+        if (isPerfect && Input.GetKeyDown(KeyCode.X))
+        {
+            isPerfectlyPressed = true;
+        }
+
         // Check if the outer circle is too close to the inner circle
         if (GetDistance() <= 0.1f) // Adjust the threshold as needed
         {
             Debug.Log("Outer circle is too close to the inner circle. Resetting...");
             ResetCircle();
+            isPerfectlyPressed = false;
             isPerfect = false;
         }
-
         if (isPerfect && Input.GetKeyDown(KeyCode.X))
         {
+            ConfirmPress();
             Debug.Log("Perfect!");
-            ResetCircle();
         }
         else if (!isPerfect && Input.GetKeyDown(KeyCode.X))
         {
@@ -88,5 +95,15 @@ public class CircleTimingMechanic : MonoBehaviour
         float distance = outerCircle.transform.localScale.x - innerCircle.transform.localScale.x;
         return distance;
     }
+
+    public void ConfirmPress()
+{
+    ResetCircle(); // Çemberi sıfırlama
+    isPerfectlyPressed = false; // isPerfectlyPressed'i sıfırla
+    // TimeManager zamanın normale dönmesi için burada çağrılabilir
+    TimeManager timeManager = FindObjectOfType<TimeManager>();
+    timeManager.ResetTimeSpeed();
+}
+
 
 }

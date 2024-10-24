@@ -11,41 +11,45 @@ public class PadTriggerController : MonoBehaviour
     public bool isBouncing = false;
     public float bounceTimer = 0f;
     public float bounceDuration = 0.2f;
-    public float bounceSpeed = 50f; // Added a public field for bounce speed
+    public float bounceSpeed = 50f; // Bounce hızı
+    public float slowTimeDistance = 5f; // Yavaşlatmanın başlayacağı mesafe
+    public float distanceToPad;
+    private bool isTimeSlowed = false;
+
+    private Transform playerTransform; // Oyuncunun pozisyonunu almak için
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = 0; // Ensure drag is set to zero
+        rb.drag = 0; // Drag sıfır
         _ctm = GetComponent<CircleTimingMechanic>();
         _colorState = GetComponent<ColorState>();
         _playerStats = GetComponent<PlayerStats>();
         _playerMovement = GetComponent<PlayerMovement>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform; // Oyuncuyu bul
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Pad"))
+        // Mesafe kontrolü
+        distanceToPad = Vector2.Distance(playerTransform.position, transform.position);
+
+        // Eğer oyuncu belirlenen mesafeden yakınsa zaman yavaşlasın
+        if (distanceToPad <= slowTimeDistance && !isTimeSlowed)
         {
-            isBouncing = true;
-            bounceTimer = bounceDuration;
             TimeManager timeManager = FindObjectOfType<TimeManager>();
-            timeManager.SlowTimeSpeed();
-
-            if (Vector3.Distance(transform.position, collision.transform.position) < 2f && _ctm.isPerfect && _colorState.GetCurrentState() == ColorState.Red)
-            {
-                timeManager.ResetTimeSpeed();
-                LaunchPlayer(bounceSpeed);
-            }
-            else
-            {
-                timeManager.ResetTimeSpeed();
-            }
+            timeManager.SlowTimeSpeed(); // Zamanı yavaşlat
+            isTimeSlowed = true; // Tekrar yavaşlatmayı engellemek için bayrak
         }
-    }
+        // Eğer oyuncu pad'e çok yakın değilse ve zaman yavaşlatılmışsa, zamanı normale döndür
+        else if (distanceToPad > slowTimeDistance && isTimeSlowed)
+        {
+            TimeManager timeManager = FindObjectOfType<TimeManager>();
+            timeManager.ResetTimeSpeed(); // Zamanı normale döndür
+            isTimeSlowed = false; // Zaman normale döndü
+        }
 
-    private void Update()
-    {
+        // Bounce zamanı kontrol
         if (isBouncing)
         {
             bounceTimer -= Time.deltaTime;
@@ -57,10 +61,28 @@ public class PadTriggerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pad"))
+        {
+            if (_ctm.isPerfectlyPressed) // Eğer X tuşuna mükemmel zamanda basıldıysa
+            {
+                isBouncing = true;
+                bounceTimer = bounceDuration;
+                LaunchPlayer(bounceSpeed);
+
+                _ctm.isPerfectlyPressed = false; // Sıfırlama
+                TimeManager timeManager = FindObjectOfType<TimeManager>();
+                timeManager.ResetTimeSpeed(); // Zaman normale dönsün
+                isTimeSlowed = false; // Zaman yavaşlatmayı sıfırla
+            }
+        }
+    }
+
     public void LaunchPlayer(float speed)
     {
         _playerMovement.SetBouncing(true);
-        float direction = -_playerStats.CheckDirection(); // Get the direction to apply force
-        rb.velocity = new Vector2(direction * speed, rb.velocity.y); // Set velocity directly for consistent bounce
+        float direction = -_playerStats.CheckDirection(); // Yön al
+        rb.velocity = new Vector2(direction * speed, rb.velocity.y); // Hız ayarla
     }
 }
